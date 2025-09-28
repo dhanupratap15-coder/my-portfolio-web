@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dhanu Pratap - Portfolio</title>
   <style>
-    html { scroll-behavior: smooth; }
+    html { 
+    scroll-behavior: smooth;
+     overflow-x: hidden;
+    }
     body {
       margin: 0; padding: 0;
       font-family: 'Trebuchet MS', Arial, sans-serif;
       background: linear-gradient(to right, #141e30, #243b55);
       color: white;
+       overflow-x: hidden;
       transition: all 0.3s ease-in-out;
     }
 
@@ -23,26 +27,43 @@
       z-index: 10;
       background-color: rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(10px);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 20px;
     }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: white;
+      background: none;
+      border: none;
+    }
+
     .container .navbaar ul {
       list-style: none;
       display: flex; 
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 18px; 
       justify-content: flex-end;
       align-items: center;
-      padding: 10px 20px;
       margin: 0;
       font-size: 1rem;
+        overflow-x: auto;
+      padding: 0;
     }
-    .container .navbaar ul li a {
+
+    .container .navbaar ul li a,
+    .container .navbaar ul li button {
       text-decoration: none; color: white;
       transition: 0.3s;
     }
+
     .container .navbaar ul li a:hover {
       color: #00d4ff; 
       text-decoration: underline;
     }
+    
     .btn {
       padding: 6px 14px; 
       border: none;
@@ -260,12 +281,29 @@
 
     /* ===== Responsive ===== */
     @media (max-width:768px) {
+      .menu-toggle { display: block; }
+      .navbaar {
+        position: absolute;
+        top: 56px; left: 0;
+        width: 100%;
+        background: rgba(0,0,0,0.9);
+        display: none;
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 0;
+      }
+      .navbaar ul {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .navbaar.active {
+        display: flex;
+      }
       .pd { flex-direction: column; text-align: center; }
       .photo img { width: 220px; height: 220px; }
       .skill-list, .project-list { flex-direction: column; align-items: center; }
     }
     @media (max-width:480px) {
-      .container .navbaar ul { flex-direction: column; gap: 8px; font-size: 0.9rem; padding: 8px; }
       .introduction p { font-size: 1rem; }
       .skill-card, .project-card { width: 100%; }
     }
@@ -292,7 +330,9 @@
   <!-- Navbar -->
   <header>
     <div class="container">
-      <div class="navbaar">
+      <h2 style="margin:0;">Portfolio</h2>
+      <button class="menu-toggle" id="menuToggle">☰</button>
+      <div class="navbaar" id="navbaar">
         <ul>
           <li><a href="#Profile">Profile</a></li>
           <li><a href="#Education">Education</a></li>
@@ -324,7 +364,7 @@
   <section id="Education">
     <div class="education">
       <h2>🎓 Education</h2>
-      <div class="edu-card"><h3>Bachelor of Technology (CSE)</h3><p>AKTU University</p><p class="edu-year">2024 - 2028</p></div>
+      <div class="edu-card"><h3>Bachelor of Technology (CSE)</h3><p>AKTU University</p><p class="edu-year">2024 - 2025</p></div>
       <div class="edu-card"><h3>Senior Secondary (12th)</h3><p>RIC School</p><p class="edu-year">2022 - 2024</p></div>
       <div class="edu-card"><h3>High School (10th)</h3><p>RIC School</p><p class="edu-year">2020 - 2022</p></div>
     </div>
@@ -398,6 +438,22 @@
   </footer>
 
   <script>
+    // === Mobile Menu Toggle ===
+    const menuToggle = document.getElementById("menuToggle");
+    const navbaar = document.getElementById("navbaar");
+    const navLinks = navbaar.querySelectorAll("a");
+
+    menuToggle.addEventListener("click", () => {
+      navbaar.classList.toggle("active");
+    });
+
+    // link click par menu band ho jaye
+    navLinks.forEach(link => {
+      link.addEventListener("click", () => {
+        navbaar.classList.remove("active");
+      });
+    });
+
     // === Read More Toggle ===
     const readMoreBtn = document.getElementById("readMoreBtn");
     const readMoreSection = document.getElementById("readMoreSection");
@@ -436,6 +492,3 @@
   </script>
 </body>
 </html>
-
-
-
